@@ -26,7 +26,7 @@ jobs:
             FOLDERS=$(find . -type d -not -path './.git/*' -not -path '.' | sed 's|^./||')
             for FOLDER in $FOLDERS; do
               DATE=$(git log -1 --format="%cd" --date=short -- $FOLDER)
-              echo "- [$FOLDER](https://github.com/${{ github.repository }}/tree/main/$FOLDER), Last Updated: $DATE" >> temp.txt
+              echo "- [$FOLDER](https://github.com/lys7aves/mathematics/tree/main/$FOLDER), Last Updated: $DATE" >> temp.txt
             done
             
             # Append to README.md
