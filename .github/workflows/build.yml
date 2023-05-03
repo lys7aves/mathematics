@@ -28,8 +28,8 @@ jobs:
 
     - name: Commit Files
       run: |
-        git config --global user.name 'Github Actions'
-        git config --global user.email 'actions@github.com'
+        git config --global user.name 'lys7aves'
+        git config --global user.email 'lys7aves@gmail.com'
         git add .
         git commit -m "Update folder list in README"
         git push
