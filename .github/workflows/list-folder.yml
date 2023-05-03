@@ -30,7 +30,7 @@ jobs:
         echo "This is a list of folders in this repository and their last update dates:\n" >> README.md
         echo "| Folder | Last Update |" >> README.md
         echo "| ------ | -----------|" >> README.md
-        cat folder_list.txt | awk '{print "| "$$0" | `git log -1 --pretty=format:"%cd" -- "$$0"` |"}' >> README.md
+        #cat folder_list.txt | awk '{print "| "$$0" | `git log -1 --pretty=format:"%cd" -- "$$0"` |"}' >> README.md
 
     - name: Validate README
       uses: ./markdownlint
