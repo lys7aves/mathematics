@@ -32,7 +32,7 @@ jobs:
         files: README.md
 
     - name: Sync to S3
-      uses: jakejarvis/s3-sync-action@v2.1.2
+      uses: jakejarvis/s3-sync-action@master
       with:
         args: --no-follow-symlinks
         source_dir: .
