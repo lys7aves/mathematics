@@ -42,7 +42,7 @@ def find_target(path, level):
             
         # 파일(혹은 디렉토리) 리스트에 추가하기
         mtime = datetime.fromtimestamp(os.stat(item_path).st_mtime)  # 수정 날짜 가져오기
-        mtime = mtime.strftime('%a %b %d %H:%M:%S %Y %z')  # 날짜 형식 변환
+        mtime = mtime.strftime('%a %b %d %Y')  # 날짜 형식 변환
         target_list.append([level, item, item_path, mtime])
         cnt += 1
         
@@ -66,4 +66,5 @@ with open("README.md", "w") as f:
     for target in target_list:
         for level in range(target[0]):
             f.write("  ")
-        f.write("- [{}](\"{}\") - {}\n".format(target[1], target[2], target[3]))
+        
+        f.write("- [{}](\"{}\") - {}\n".format(target[1], target[2].replace(' ', '_'), target[3]))
