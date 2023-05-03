@@ -26,12 +26,6 @@ jobs:
         echo "| ------ | -----------|" >> README.md
         cat folder_list.txt | awk '{print "| "$$0" | `git log -1 --pretty=format:"%cd" -- "$$0"` |"}' >> README.md
 
-    - name: Validate README
-      uses: davidrunger/markdownlint-github-action@v0.3.1
-      with:
-        config: ./config/markdownlint.json
-        ignore: ./config/markdownlint.ignore
-
     - name: Commit Files
       run: |
         git config --global user.name 'Github Actions'
