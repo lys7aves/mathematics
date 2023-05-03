@@ -11,6 +11,12 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
+      
+    - name: Copy Action Files
+      run: |
+        mkdir -p /home/runner/work/_actions/DavidAnson/markdownlint/v0.23.1/
+        cp -r $GITHUB_WORKSPACE/. /home/runner/work/_actions/DavidAnson/markdownlint/v0.23.1/
+      shell: bash
 
     - name: List Folders
       id: list-folders
@@ -27,7 +33,7 @@ jobs:
         cat folder_list.txt | awk '{print "| "$$0" | `git log -1 --pretty=format:"%cd" -- "$$0"` |"}' >> README.md
 
     - name: Validate README
-      uses: DavidAnson/markdownlint@v0.23.1
+      uses: ./markdownlint
       with:
         files: README.md
 
