@@ -1,37 +1,31 @@
-name: Update README
+name: Update Folder List
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  update-readme:
+  update-folder-list:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        
-      - name: Update README
-        uses: Ligengxin96/github-update-readme@v1.7.0
-        with:
-          toc: true
-          exclude: 'LICENSE|README.md|.github'
-          exclude-pattern: '.png|.gif|.jpg|.jpeg|.ipynb|.pdf|.zip'
-          enable-pages: true
-          enable-auto-prune: true
-          enable-wordwrap: true
-          script: |
-            # Collect folder list and last updated date
-            FOLDERS=$(find . -type d -not -path './.git/*' -not -path '.' | sed 's|^./||')
-            for FOLDER in $FOLDERS; do
-              DATE=$(git log -1 --format="%cd" --date=short -- $FOLDER)
-              echo "- [$FOLDER](https://github.com/${{ github.repository }}/tree/main/$FOLDER), Last Updated: $DATE" >> temp.txt
-            done
-            
-            # Append to README.md
-            sed '/<!-- FOLDER LIST -->/q' README.md > temp.md
-            cat temp.txt >> temp.md
-            echo "<!-- FOLDER LIST -->" >> temp.md
-            sed -n -e '/<!-- UPDATE START -->/,$p' README.md >> temp.md
-            mv temp.md README.md
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: List Folders
+      id: list-folders
+      run: |
+        find . -type d -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g' > folder_list.txt
+        echo "::set-output name=folder_list::$(cat folder_list.txt)"
+
+    - name: Update README
+      uses: peaceiris/actions-readme@v2.0.5
+      with:
+        readme_path: README.md
+        insert: true
+        content: |
+          # Folder List
+
+          This is a list of folders in this repository and their last update dates:
+
+          ${{ steps.list-folders.outputs.folder_list }}
