@@ -37,11 +37,12 @@ def find_target(path, level):
     for item in os.listdir(path):
         item_path = os.path.join(path, item)
         
-        if check_ignore_pattern(item_path): # ignore 조건을 만족하면 무시
+        if check_ignore_pattern(item) or check_ignore_pattern(item_path): # 파일 이름이나 경로가 ignore 조건을 만족하면 무시
             continue
             
         # 파일(혹은 디렉토리) 리스트에 추가하기
         mtime = datetime.fromtimestamp(os.stat(item_path).st_mtime)  # 수정 날짜 가져오기
+        mtime = mtime.strftime('%a %b %d %H:%M:%S %Y %z')  # 날짜 형식 변환
         target_list.append([level, item, item_path, mtime])
         cnt += 1
         
@@ -65,4 +66,4 @@ with open("README.md", "w") as f:
     for target in target_list:
         for level in range(target[0]):
             f.write("  ")
-        f.write("- [{}]({}) - {}\n".format(target[1], target[2], target[3]))
+        f.write("- [{}](\"{}\") - {}\n".format(target[1], target[2], target[3]))
