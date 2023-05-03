@@ -11,7 +11,7 @@ with open('./.github/config/.ignore', 'r') as f:
 patterns = []
 for p in ignore:
     pattern = r""
-    for c in p:
+    for c in p.strip():
         if c == '*':
             pattern = pattern + r".*"
         elif c in ".^$*+?{}[]|()":  # 메타 문자
@@ -25,7 +25,7 @@ print(patterns)
 # ignore 패턴과 일치하는지 확인하는 함수
 def check_ignore_pattern(item_path):
     for pattern in patterns:
-        if re.fullmatch(pattern, item_path[2:]):  # 항상 붙는 "[dir_path]/" 제거
+        if re.fullmatch(pattern, item_path[(len(dir_path)+1):]):  # 항상 붙는 "[dir_path]/" 제거
             return True
     return False
 
