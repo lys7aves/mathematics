@@ -1,6 +1,6 @@
-# mathematics
-A collection of notes and solutions on various mathematical topics.
+# Folder List
 
-<!-- FOLDER LIST -->
+This is a list of folders in this repository and their last update dates:
 
-<!-- UPDATE START -->
+| Folder | Last Update |
+| ------ | -----------|
